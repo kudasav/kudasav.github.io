@@ -1,0 +1,31 @@
+title: Kuda Savanhu
+description: Hello there! I am a software engineer with a passion for cybersecurity. Welcome to my blog :)
+permalink: ':title/'
+baseurl: "" 
+url: "" 
+site-twitter: 
+
+# Author Settings
+author: Kuda Savanhu 
+about-author: Hello there! I am a software engineer with a passion for cybersecurity. Welcome to my blog :)
+author-img: profile.jpg
+social-github: kudasav
+social-linkedin: kuda-savanhu
+
+# Disqus
+discus-identifier: 
+
+# Tracker
+analytics: # Google Analytics
+
+# Build Settings
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jemoji
+
+paginate: 8
+paginate_path: "/page/:num"
+
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]
