@@ -1,0 +1,32 @@
+---
+layout: default
+title: Blog
+permalink: /blog/
+---
+
+<h1 class="text-4xl font-bold mb-6 text-gray-900 mt-14">Blog</h1>
+<div class="mt-10 flex flex-col gap-5">
+	{% for post in site.posts %}
+	<a href="{{ post.url | relative_url }}">
+		<article class="pb-8 sm:pb-10 text-gray-900 hover:text-gray-600">
+			<h2 class="text-xl font-semibold leading-tight tracking-tight">
+				{{ post.title }}
+			</h2>
+
+			<div class="text-gray-700">
+				<p class="mt-4 max-w-3xl text-base leading-7 sm:text-md sm:leading-8">
+					{% if post.description %}
+					{{ post.description }}
+					{% elsif post.excerpt %}
+					{{ post.excerpt | strip_html | truncatewords: 50 }}
+					{% endif %}
+				</p>
+
+				<div class="mt-2 text-sm">
+					<span>{{ post.date | date: "%B %-d, %Y" }}</span>
+				</div>
+			</div>
+		</article>
+	</a>
+	{% endfor %}
+</div>
