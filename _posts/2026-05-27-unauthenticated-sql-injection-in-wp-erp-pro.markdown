@@ -78,7 +78,7 @@ Requests to the endpoint are processed by the `get_jobs` function:
 
 The function reads a `search_key` query parameter from the request and concatenates it into a `LIKE` clause without any sanitization and executes the resulting query as a raw SQL statement using `$wpdb->get_results()`.
 
-Because the `search_key` value lands between single quotes inside a `LIKE` query, all we need to do is close the quote, append an arbitrary sql statement, and comment out the remaining query. 
+Because the `search_key` value lands between single quotes inside a `LIKE` query, all we need to do is close the quote, append an arbitrary SQL statement, and comment out the remaining query. 
 
 While WordPress' `wpdb` driver does not allow stacked queries, we can still exploit this bug to get full read access to any table in the database by using a `UNION SELECT` statement.
 
@@ -89,7 +89,7 @@ The combination of no authentication and direct string concatenation allows us t
 
 To pull this off, we have to terminate the `LIKE` clause early and inject a `UNION SELECT` clause targeting a different table, ensuring our column count matches the number of columns in WordPress' `posts` table.
 
-For instace, we can make this request to read the username and password hash columns from the `wp_users` table. `wp_posts` has 23 columns, so the `UNION` matches that shape and pads out the rest of the columns with null values:
+For instance, we can make this request to read the username and password hash columns from the `wp_users` table. `wp_posts` has 23 columns, so the `UNION` matches that shape and pads out the rest of the columns with null values:
 
 <pre class="line-numbers no-padding">
 <code class="bash">curl -G "https://target.com/wp-json/erp/v1/hrm/recruitment/jobs" \
