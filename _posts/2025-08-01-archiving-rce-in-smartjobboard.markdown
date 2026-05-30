@@ -4,6 +4,9 @@ title: "Achieving Unauthenticated Remote Code Execution in SmartJobBoard: A Tech
 date: 2025-07-30
 description: In this post i explore critical security flaws in SmartJobBoard software, including template injection, SQL injection, cross-site scripting, and remote code execution.
 img:
+redirect_from:
+  - /archiving-rce-in-smartjobboardl/
+  - /archiving-rce-in-smartjobboardl.html
 ---
 
 Our adventure begins with the discovery of a rather perplexing template injection vulnerability on a job board website
