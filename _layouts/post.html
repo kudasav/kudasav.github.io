@@ -35,7 +35,7 @@ layout: default
 {%- assign related_list = related_urls | split: "|" -%}
 {%- if related_list.size > 0 -%}
 <section class="mt-12 pt-8 border-t border-gray-200">
-  <h2 class="text-lg font-bold mb-4">Related posts</h2>
+  <h2 class="text-lg font-bold mb-4 mt-2">Related posts</h2>
   <ul class="space-y-4">
     {%- for post in site.posts -%}
       {%- if related_list contains post.url -%}
