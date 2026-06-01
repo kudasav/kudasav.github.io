@@ -38,8 +38,8 @@ FROM nginx:1.27-alpine AS serve
 # Serve the generated static site.
 COPY --from=build /app/_site /usr/share/nginx/html
 
-# Make nginx listen on 4000 instead of the default 80.
-RUN sed -i 's/listen       80;/listen       4000;/; s/listen  \[::\]:80;/listen  [::]:4000;/' /etc/nginx/conf.d/default.conf
+# Custom config: listen on 4000 and emit relative redirects (see nginx.conf).
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 4000
 
