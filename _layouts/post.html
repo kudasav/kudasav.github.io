@@ -3,9 +3,57 @@ layout: default
 ---
 
 <article class="space-y-6 text-base my-8">
-	 <header class="header-page">
-        <h1 class="text-2xl sm:text-4xl font-medium mb-3">{{page.title}}</h1>
-        <div class="page-date text-sm"><span>{{page.date | date: '%Y, %b %d'}}&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
-      </header>
-	{{ content }}
+  <header class="header-page">
+    <h1 class="text-2xl sm:text-4xl font-medium mb-3">{{ page.title }}</h1>
+    <div class="page-date text-sm text-gray-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+      <span>By {{ site.author.name | default: site.title }}</span>
+      <span aria-hidden="true">&middot;</span>
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%b %-d, %Y' }}</time>
+      {% if page.last_modified_at %}
+      <span aria-hidden="true">&middot;</span>
+      <span>Updated {{ page.last_modified_at | date: '%b %-d, %Y' }}</span>
+      {% endif %}
+    </div>
+    {% if page.tags and page.tags != empty %}
+    <ul class="flex flex-wrap gap-2 mt-3 text-xs">
+      {% for tag in page.tags %}
+      <li class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">#{{ tag }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  {{ content }}
 </article>
+
+{%- comment -%}
+  Related posts: other posts that share at least one tag with this one.
+{%- endcomment -%}
+{%- assign related_urls = "" -%}
+{%- for post in site.posts -%}
+  {%- if post.url != page.url -%}
+    {%- assign shared = false -%}
+    {%- for tag in post.tags -%}
+      {%- if page.tags contains tag -%}{%- assign shared = true -%}{%- break -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if shared -%}{%- assign related_urls = related_urls | append: post.url | append: "|" -%}{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign related_list = related_urls | split: "|" -%}
+{%- if related_list.size > 0 -%}
+<section class="mt-12 pt-8 border-t border-gray-200">
+  <h2 class="text-lg font-bold mb-4">Related posts</h2>
+  <ul class="space-y-4">
+    {%- for post in site.posts -%}
+      {%- if related_list contains post.url -%}
+      <li>
+        <a href="{{ post.url | relative_url }}" class="group block">
+          <span class="font-medium group-hover:underline">{{ post.title }}</span>
+          {%- if post.description %}<span class="block text-sm text-gray-500 mt-0.5">{{ post.description | strip_html | truncate: 120 }}</span>{% endif -%}
+        </a>
+      </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}

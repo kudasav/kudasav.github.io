@@ -4,19 +4,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="{{ site.baseurl }}/assets/img/favicon/favicon.ico">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ site.baseurl }}/assets/img/favicon/favicon.ico">
-  <link rel="stylesheet" href="{{site.baseurl}}/assets/main.css">
-  <link rel="stylesheet" href="{{site.baseurl}}/assets/custom.css">
-  <script src="{{ site.baseurl }}/assets/main-bundle.js"></script>
-  <title>{{ site.title }}</title>
-  <!-- Highlight.js dark theme -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <meta name="theme-color" content="#000000">
 
-    <!-- Line numbers plugin -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.13.0/styles/line-numbers.min.css" /> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
+  <!-- Icons & web app manifest -->
+  <link rel="icon" type="image/x-icon" href="{{ '/assets/img/favicon/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/favicon/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+
+  <!-- SEO: title, description, canonical, Open Graph, Twitter cards, JSON-LD -->
+  {% seo %}
+  {% feed_meta %}
+  {%- comment -%} Keywords meta is not emitted by jekyll-seo-tag, so build it here: explicit keywords, else tags, else the site default. {%- endcomment -%}
+  {%- if page.keywords -%}{%- assign kw = page.keywords -%}
+  {%- elsif page.tags and page.tags != empty -%}{%- assign kw = page.tags | join: ', ' -%}
+  {%- else -%}{%- assign kw = site.keywords -%}{%- endif -%}
+  {%- if kw and kw != '' %}
+  <meta name="keywords" content="{{ kw | strip }}">
+  {%- endif %}
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/custom.css' | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+  <!-- Scripts: deferred so they don't block first render. The init in footer.html
+       runs on DOMContentLoaded, which fires after deferred scripts execute. -->
+  <script defer src="{{ '/assets/main-bundle.js' | relative_url }}"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
 </head>
 <body >
   

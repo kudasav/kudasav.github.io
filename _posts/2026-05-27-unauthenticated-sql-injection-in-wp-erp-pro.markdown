@@ -3,7 +3,8 @@ layout: post
 title: "Unauthenticated SQL Injection in WP ERP Pro (CVE-2026-4834)"
 date: 2026-05-27
 description: A look at CVE-2026-4834, an unauthenticated SQL injection in the WP ERP Pro WordPress plugin's recruitment REST API that lets attackers read arbitrary data from the database.
-img:
+tags: [wordpress, sql-injection, cve, web-security, vulnerability-research]
+keywords: CVE-2026-4834, WP ERP Pro, SQL injection, WordPress plugin vulnerability, unauthenticated SQLi, REST API security
 ---
 
 Well hello there! In today's post we will be exploring an SQL injection vulnerability I discovered in the WP ERP Pro WordPress plugin.

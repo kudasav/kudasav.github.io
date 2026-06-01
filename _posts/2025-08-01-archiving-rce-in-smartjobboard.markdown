@@ -3,7 +3,9 @@ layout: post
 title: "Achieving Unauthenticated Remote Code Execution in SmartJobBoard: A Technical Deep Dive"
 date: 2025-07-30
 description: In this post i explore critical security flaws in SmartJobBoard software, including template injection, SQL injection, cross-site scripting, and remote code execution.
-img:
+image: /assets/img/SmartJobBoard/remote-code-execution.png
+tags: [rce, template-injection, sql-injection, xss, web-security, vulnerability-research]
+keywords: SmartJobBoard, remote code execution, template injection, SQL injection, reflected XSS, unauthenticated RCE, web application security
 redirect_from:
   - /archiving-rce-in-smartjobboardl/
   - /archiving-rce-in-smartjobboardl.html
@@ -11,7 +13,7 @@ redirect_from:
 
 Our adventure begins with the discovery of a rather perplexing template injection vulnerability on a job board website
 
-![Template injection in SmartJobBoard]({{site.baseurl}}/assets/img/SmartJobBoard/template-injection.png)
+![Template injection rendering a variable value in SmartJobBoard]({{site.baseurl}}/assets/img/SmartJobBoard/template-injection.png){: loading="lazy" decoding="async" width="1833" height="905"}
 
 After some poking around, I realized that the site only responded to variable names and not much else. For instance, entering {$url} into an input field would echo the value "/ajax/" and any other template injection payloads were either ignored or simply returned blank results.
 
@@ -104,7 +106,7 @@ Altogether, this chain of events makes the information disclosure vulnerability 
 
 For instance we can retrieve the SMTP password by entering $GLOBALS.settings.smtp_password into any reflected input field
 
-![Template injection in SmartJobBoard]({{site.baseurl}}/assets/img/SmartJobBoard/template-injection-password.png)
+![Reading the SMTP password through SmartJobBoard template injection]({{site.baseurl}}/assets/img/SmartJobBoard/template-injection-password.png){: loading="lazy" decoding="async" width="1853" height="913"}
 
 This vulnerability exposes sensitive system configuration values including, SMTP credentials (smtp_host, smtp_username, smtp_password), API keys, and admin credentials (username, password).
 
@@ -128,7 +130,7 @@ This creates a reflected cross-site scripting (XSS) vulnerability, allowing us t
 
 {% raw %}`{site}/login?shopping_cart="><h1>"It's a leap of faith. That's all it is Miles, a leap of faith.</h1>`{% endraw %}
 
-![Reflected cross site scripting]({{site.baseurl}}/assets/img/SmartJobBoard/reflected cross-site-scripting.png)
+![Reflected cross-site scripting payload executing in SmartJobBoard]({{site.baseurl}}/assets/img/SmartJobBoard/reflected cross-site-scripting.png){: loading="lazy" decoding="async" width="1847" height="916"}
 
 ## Vulnerability #3: SQL Injection (Version 4.2)
 
@@ -175,7 +177,7 @@ For instance, we can fetch the passwords and usernames of admin accounts from th
 
 `{url}/system/miscellaneous/autocomplete/password/string/administrator/padding/padding/?q=2`
 
-![Using SQLI to get the admin user passwords]({{site.baseurl}}/assets/img/SmartJobBoard/sqli-admin-password.png)
+![SQL injection retrieving admin usernames and password hashes]({{site.baseurl}}/assets/img/SmartJobBoard/sqli-admin-password.png){: loading="lazy" decoding="async" width="1866" height="946"}
 
 
 ## Vulnerability #4: Template Injection and Remote Code Execution (Versions 4.2 – 5.0.13)
@@ -192,17 +194,17 @@ This effectively gives us full control over what is displayed on the page by all
 
 `{site url}/login?template=/../../../../etc/passwd`
 
-![arbitrary file read]({{site.baseurl}}/assets/img/SmartJobBoard/arbitrary-file-read.png)
+![Arbitrary file read of /etc/passwd via the template parameter]({{site.baseurl}}/assets/img/SmartJobBoard/arbitrary-file-read.png){: loading="lazy" decoding="async" width="1866" height="946"}
 
 This vulnerability becomes even more critical when combined with an unauthenticated file upload flaw in the ajax_file_upload_handler class. Using it we can upload files to the /files/files directory.
 
-![anauthenticated file upload]({{site.baseurl}}/assets/img/SmartJobBoard/anauthenticated-file-upload.png)
+![Unauthenticated file upload in SmartJobBoard]({{site.baseurl}}/assets/img/SmartJobBoard/anauthenticated-file-upload.png){: loading="lazy" decoding="async" width="1920" height="1032"}
 
 We can then execute the uploaded files by creating a url that points the template variable to it 
 
 `{site url}/login?template=../../../files/files/shell.pdf`
 
-![remote code execution]({{site.baseurl}}/assets/img/SmartJobBoard/remote-code-execution.png)
+![Remote code execution achieved through the uploaded shell]({{site.baseurl}}/assets/img/SmartJobBoard/remote-code-execution.png){: loading="lazy" decoding="async" width="1844" height="938"}
 
 This sequence of events ultimately leads to a critical, unauthenticated remote code execution vulnerability, granting us full system access on any vulnerable website.
 

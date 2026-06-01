@@ -1,10 +1,38 @@
 title: Kuda Savanhu
-description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+tagline: Developer & Cybersecurity Researcher # short homepage <title> suffix (seo-tag)
+description: >-
+  Security research and vulnerability write-ups by Kuda Savanhu — CVE deep dives,
+  web application penetration testing, and full-stack development notes.
+url: "https://kudasav.com" # the base hostname & protocol for your site
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+lang: en
+
+# --- SEO (jekyll-seo-tag) ---
+author:
+  name: Kuda Savanhu
+
+# Default Open Graph / Twitter share image used when a page sets none of its own
+image: /assets/img/profile.jpg
+logo: /assets/img/profile.jpg # used as the publisher logo in BlogPosting JSON-LD
+
+# Default meta keywords (a post's own `keywords:` or `tags:` override this)
+keywords: cybersecurity, security research, vulnerability research, penetration testing, CVE, web application security, ethical hacking
+
+social:
+  name: Kuda Savanhu
+  links: # rendered as sameAs in the Person structured data
+    - https://www.linkedin.com/in/kuda-savanhu
+    - https://github.com/kudasav
+    - https://hackerone.com/kudasav
+
+# Emit BlogPosting structured data + default fields for every post
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      seo:
+        type: BlogPosting
 
 plugins:
   - jekyll-feed

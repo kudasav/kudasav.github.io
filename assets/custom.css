@@ -6,3 +6,10 @@ article h2 {
 article p{
     font-size: 17px;
 }
+
+/* Keep images responsive while honouring the width/height attributes
+   (set in markdown) so the browser can reserve space and avoid layout shift. */
+article img {
+    max-width: 100%;
+    height: auto;
+}
