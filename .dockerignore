@@ -1,0 +1,27 @@
+# Dependencies & build output (regenerated inside the image)
+node_modules
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor/bundle
+
+# VCS & local tooling
+.git
+.gitignore
+.github
+
+# Editor / OS cruft
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Misc
+*.log
+README.md
+LICENSE
