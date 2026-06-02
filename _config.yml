@@ -1,7 +1,7 @@
 title: Kuda Savanhu
 tagline: Developer & Cybersecurity Researcher # short homepage <title> suffix (seo-tag)
 description: >-
-  Security research and vulnerability write-ups by Kuda Savanhu — CVE deep dives,
+  Security research and vulnerability write-ups by Kuda Savanhu. CVE deep dives,
   web application penetration testing, and full-stack development notes.
 url: "https://kudasav.com" # the base hostname & protocol for your site
 baseurl: "" # the subpath of your site, e.g. /blog
